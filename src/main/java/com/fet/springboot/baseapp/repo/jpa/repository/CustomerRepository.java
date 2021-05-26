@@ -9,7 +9,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.fet.springboot.baseapp.repo.domain.Category;
 import com.fet.springboot.baseapp.repo.domain.Customer;
 /**
  * JpaRepository Object

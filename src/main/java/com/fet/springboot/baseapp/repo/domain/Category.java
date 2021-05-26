@@ -28,6 +28,9 @@ public class Category {
   @Column(name="long_description")
   private String long_description;
   
+  @Temporal(value=TemporalType.TIMESTAMP)
+  @Column(name="active_start_date")
+  private Date start_date;
 
 public String getLong_description() {
 	return long_description;
@@ -37,8 +40,6 @@ public void setLong_description(String long_description) {
 	this.long_description = long_description;
 }
 
-@Column(name="active_start_date")
-  private Date start_date;
   
 
 

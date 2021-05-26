@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 /**
  * Data Trasfer Object
  * 欄位與資料庫對應
@@ -32,16 +34,11 @@ public class Customer {
 	@Column(name="email_address")
 	private String emailAddress;
 	
+	@Temporal(value=TemporalType.TIMESTAMP)
 	@Column(name="date_created")
 	private Date dateCreated;
 	
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
+	
 
 	public Customer() {
 		
@@ -82,7 +79,13 @@ public class Customer {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+	public Date getDateCreated() {
+		return dateCreated;
+	}
 
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailAddress="

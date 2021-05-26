@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DataSourceConfig {
 	private static final String driverClassName = "com.mysql.cj.jdbc.Driver";
-	private static final String url = "jdbc:mysql://localhost:3306/broadleaf?useSSL=false&serverTimezone=UTC";
+	private static final String url = "jdbc:mysql://localhost:3306/broadleaf?useSSL=false&serverTimezone=Asia/Taipei";
 	private static final String userName = "root";
 	private static final String password = "123456";
 	@Bean

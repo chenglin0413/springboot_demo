@@ -1,5 +1,7 @@
 package com.fet.springboot.baseapp.web.controller;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fet.springboot.baseapp.SpringBootBaseAppApplication;
 import com.fet.springboot.baseapp.logic.service.impl.CustomerServiceImpl;
 import com.fet.springboot.baseapp.repo.domain.Customer;
 
@@ -77,11 +78,14 @@ public class CustomerController {
 	      List<Customer> customers = customerServiceImpl.findAll(Sort.by(orders));
 
 	      if (customers.isEmpty()) {
+	    	logger.info("CustomerController - getAllCustomers - No content ");
 	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	      }
 
+	      logger.info("CustomerController - getAllCustomers - OK ");
 	      return new ResponseEntity<>(customers, HttpStatus.OK);
 	    } catch (Exception e) {
+	      logger.error("CustomerController - getAllCustomers - INTERNAL_SERVER_ERROR ");
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	  }
@@ -94,7 +98,7 @@ public class CustomerController {
 	   * @return new ResponseEntity<>(response, HttpStatus.OK)
 	   */
 	  @GetMapping("/customers")
-	  public ResponseEntity<Map<String, Object>> getAllCategoriesPage(
+	  public ResponseEntity<Map<String, Object>> getAllCustomersPage(
 	      @RequestParam(required = false) String firstName,
 	      @RequestParam(defaultValue = "0") int page,
 	      @RequestParam(defaultValue = "3") int size,
@@ -120,9 +124,8 @@ public class CustomerController {
 
 	      Page<Customer> pageCusts;
 	      
-	      if (firstName == null) {
+	      if (firstName == null) 
 	    	  pageCusts = customerServiceImpl.findAll(pagingSort);
-	      		logger.info("CustomerController - findAll ");}
 	      else
 	    	  pageCusts = customerServiceImpl.findByFirstNameContaining(firstName, pagingSort);
 
@@ -134,8 +137,10 @@ public class CustomerController {
 	      response.put("totalItems", pageCusts.getTotalElements());
 	      response.put("totalPages", pageCusts.getTotalPages());
 
+	      logger.info("CustomerController - getAllCustomersPage - OK ");
 	      return new ResponseEntity<>(response, HttpStatus.OK);
 	    } catch (Exception e) {
+	      logger.error("CustomerController - getAllCustomersPage - INTERNAL_SERVER_ERROR ");
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	  }
@@ -150,23 +155,27 @@ public class CustomerController {
 	    Optional<Customer> customerData = customerServiceImpl.findById(id);
 
 	    if (customerData.isPresent()) {
+	      logger.info("CustomerController - getCustomerById - OK");
 	      return new ResponseEntity<>(customerData.get(), HttpStatus.OK);
 	    } else {
+	      logger.info("CustomerController - getCustomerById - Not Found");
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	  }
 	  @PostMapping("/customers")
 	  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 	    try {
-			java.util.Date date=new java.util.Date();
-			java.sql.Date sqlDate=new java.sql.Date(date.getTime());
+			Date currentDate=new Date();
+			System.out.println(currentDate);
 	    	Customer newCustomer = customerServiceImpl.save(new Customer(
 	    			customer.getFirstName(),
 	    			customer.getLastName(), 
 	    			customer.getEmailAddress(),
-	    			sqlDate));
+	    			currentDate));
+	      logger.info("CustomerController - createCustomer - OK");
 	      return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
 	    } catch (Exception e) {
+	      logger.error("CustomerController - createCustomer - INTERNAL_SERVER_ERROR");
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	  }
