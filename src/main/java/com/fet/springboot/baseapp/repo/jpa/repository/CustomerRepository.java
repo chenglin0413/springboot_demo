@@ -38,4 +38,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	Page<Customer> findAll(Pageable pageable);
 	Customer save(Customer customer);
 	Optional<Customer>  findById(Long id);
+	Customer findByFirstName(String firstName);
 }

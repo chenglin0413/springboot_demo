@@ -16,4 +16,5 @@ public interface CustomerService {
 	Page<Customer> findAll(Pageable pageable);
 	Optional<Customer> findById(Long id);
 	Customer save(Customer customer);
+	Customer findByFirstName(String firstName);
 }

@@ -1,5 +1,4 @@
-package com.fet.springboot.baseapp.web.controller;
-import java.text.SimpleDateFormat;
+package com.fet.springboot.baseapp.web.component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -166,7 +165,7 @@ public class CustomerController {
 	  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 	    try {
 			Date currentDate=new Date();
-			System.out.println(currentDate);
+//			System.out.println(currentDate);
 	    	Customer newCustomer = customerServiceImpl.save(new Customer(
 	    			customer.getFirstName(),
 	    			customer.getLastName(), 

@@ -1,4 +1,4 @@
-package com.bezkoder.spring.data.jpa.pagingsorting;
+package com.fet.springboot.baseapp.jpa.pagingsorting;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

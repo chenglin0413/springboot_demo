@@ -1,4 +1,4 @@
-package com.fet.springboot.baseapp.web.controller;
+package com.fet.springboot.baseapp.web.component;
 //package com.bezkoder.spring.data.jpa.pagingsorting.controller;
 //
 //import java.util.ArrayList;

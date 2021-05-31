@@ -1,4 +1,4 @@
-package com.fet.springboot.baseapp.web.controller;
+package com.fet.springboot.baseapp.web.component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fet.springboot.baseapp.logic.service.impl.CategoryServiceImpl;
 import com.fet.springboot.baseapp.repo.domain.Category;
-import com.fet.springboot.baseapp.repo.jpa.repository.CategoryRepository;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController

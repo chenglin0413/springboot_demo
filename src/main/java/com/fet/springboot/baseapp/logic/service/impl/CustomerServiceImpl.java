@@ -43,5 +43,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public Optional<Customer> findById(Long id) {
 		return customerRepository.findById(id);
 	}
+
+	@Override
+	public Customer findByFirstName(String firstName) {
+		return customerRepository.findByFirstName(firstName);
+	}
 	
 }
