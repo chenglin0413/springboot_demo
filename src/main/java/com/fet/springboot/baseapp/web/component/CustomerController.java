@@ -29,9 +29,10 @@ import com.fet.springboot.baseapp.logic.service.impl.CustomerServiceImpl;
 import com.fet.springboot.baseapp.repo.domain.Customer;
 
 
+
 /**
  * Handle Response/Request from API , Business Logic here. 
- * @author jamlin
+ * @author jamLin
  * @See - README.md (reference:github/bezkoder)
  */
 @CrossOrigin(origins = "http://localhost:8081")
@@ -96,11 +97,64 @@ public class CustomerController {
 	   * @param sort
 	   * @return new ResponseEntity<>(response, HttpStatus.OK)
 	   */
+//	  @GetMapping("/customers")
+//	  public ResponseEntity<Map<String, Object>> getAllCustomersPage(
+//	      @RequestParam(required = false) String firstName,
+//	      @RequestParam(defaultValue = "0") int page,
+//	      @RequestParam(defaultValue = "3") int size,
+//	      @RequestParam(defaultValue = "id,desc") String[] sort) {
+//
+//	    try {
+//	      List<Order> orders = new ArrayList<Order>();
+//
+//	      if (sort[0].contains(",")) {
+//	        // will sort more than 2 fields
+//	        // sortOrder="field, direction"
+//	        for (String sortOrder : sort) {
+//	          String[] _sort = sortOrder.split(",");
+//	          orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
+//	        }
+//	      } else {
+//	        // sort=[field, direction]
+//	        orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+//	      }
+//
+//	      List<Customer> customers = new ArrayList<Customer>();
+//	      Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
+//
+//	      Page<Customer> pageCusts;
+//	      
+//	      if (firstName == null) 
+//	    	  pageCusts = customerServiceImpl.findAll(pagingSort);
+//	      else
+//	    	  pageCusts = customerServiceImpl.findByFirstNameContaining(firstName, pagingSort);
+//
+//	      customers = pageCusts.getContent();
+//
+//	      Map<String, Object> response = new HashMap<>();
+//	      response.put("customers", customers);
+//	      response.put("currentPage", pageCusts.getNumber());
+//	      response.put("totalItems", pageCusts.getTotalElements());
+//	      response.put("totalPages", pageCusts.getTotalPages());
+//
+//	      logger.info("CustomerController - getAllCustomersPage - OK ");
+//	      return new ResponseEntity<>(response, HttpStatus.OK);
+//	    } catch (Exception e) {
+//	      logger.error("CustomerController - getAllCustomersPage - INTERNAL_SERVER_ERROR ");
+//	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+//	    }
+//	  }
+	  /**
+	   * 
+	   * @param firstName
+	   * @param page
+	   * @param size
+	   * @param sort
+	   * @return
+	   */
 	  @GetMapping("/customers")
 	  public ResponseEntity<Map<String, Object>> getAllCustomersPage(
 	      @RequestParam(required = false) String firstName,
-	      @RequestParam(defaultValue = "0") int page,
-	      @RequestParam(defaultValue = "3") int size,
 	      @RequestParam(defaultValue = "id,desc") String[] sort) {
 
 	    try {
@@ -119,22 +173,12 @@ public class CustomerController {
 	      }
 
 	      List<Customer> customers = new ArrayList<Customer>();
-	      Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
-
-	      Page<Customer> pageCusts;
-	      
 	      if (firstName == null) 
-	    	  pageCusts = customerServiceImpl.findAll(pagingSort);
+	    	  customers = customerServiceImpl.findAll(Sort.by(orders));
 	      else
-	    	  pageCusts = customerServiceImpl.findByFirstNameContaining(firstName, pagingSort);
-
-	      customers = pageCusts.getContent();
-
+	    	  customers = customerServiceImpl.findByFirstNameContaining(firstName, Sort.by(orders));
 	      Map<String, Object> response = new HashMap<>();
 	      response.put("customers", customers);
-	      response.put("currentPage", pageCusts.getNumber());
-	      response.put("totalItems", pageCusts.getTotalElements());
-	      response.put("totalPages", pageCusts.getTotalPages());
 
 	      logger.info("CustomerController - getAllCustomersPage - OK ");
 	      return new ResponseEntity<>(response, HttpStatus.OK);
@@ -170,7 +214,10 @@ public class CustomerController {
 	    			customer.getFirstName(),
 	    			customer.getLastName(), 
 	    			customer.getEmailAddress(),
-	    			currentDate));
+	    			currentDate,
+	    			customer.getChallengeAnswer(),
+	    			customer.getExternalId(),
+	    			customer.getPassword()));
 	      logger.info("CustomerController - createCustomer - OK");
 	      return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
 	    } catch (Exception e) {

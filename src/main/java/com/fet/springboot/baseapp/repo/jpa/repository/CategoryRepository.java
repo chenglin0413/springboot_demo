@@ -15,7 +15,7 @@ import com.fet.springboot.baseapp.repo.domain.Category;
  * JpaRepository Object
  * leverage JpaRepository<Object,Long> , generate Query Method 
  * 
- * @author jamlin
+ * @author jamLin
  *
  */
 @Repository("categoryRepository")

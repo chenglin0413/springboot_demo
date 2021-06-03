@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
  * Data Trasfer Object
  * 欄位與資料庫對應
  * 
- * @author jamlin
+ * @author jamLin
  *
  */
 @Entity
@@ -34,21 +34,33 @@ public class Customer {
 	@Column(name="email_address")
 	private String emailAddress;
 	
-	@Temporal(value=TemporalType.TIMESTAMP)
 	@Column(name="date_created")
 	private Date dateCreated;
 	
+	@Column(name="challenge_answer")
+	private String challengeAnswer;
+	
+	@Column(name="external_id")
+	private String externalId;
+	
+	
+	@Column(name="password")
+	private String password;
 	
 
 	public Customer() {
 		
 	}
 	
-	public Customer(String firstName, String lastName, String emailAddress,Date dateCreated) {
+	public Customer(String firstName, String lastName, String emailAddress,Date dateCreated,
+			String challengeAnswer,String externalId,String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
 		this.dateCreated = dateCreated;
+		this.challengeAnswer = challengeAnswer;
+		this.externalId = externalId;
+		this.password = password;
 	}
 	
 	
@@ -86,13 +98,38 @@ public class Customer {
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailAddress="
-				+ emailAddress + ", dateCreated=" + dateCreated + "]";
+
+	public String getChallengeAnswer() {
+		return challengeAnswer;
+	}
+
+	public void setChallengeAnswer(String challengeAnswer) {
+		this.challengeAnswer = challengeAnswer;
 	}
 
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getExternalId() {
+		return externalId;
+	}
+
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailAddress="
+				+ emailAddress + ", dateCreated=" + dateCreated + ", challengeAnswer=" + challengeAnswer
+				+ ", externalId=" + externalId + ", password=" + password + "]";
+	}
 	
 	
 }

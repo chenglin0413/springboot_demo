@@ -5,7 +5,7 @@ import javax.persistence.*;
  * Data Trasfer Object
  * 欄位與資料庫對應
  * 
- * @author jamlin
+ * @author jamLin
  *
  */
 @Entity
