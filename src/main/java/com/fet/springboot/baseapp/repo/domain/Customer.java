@@ -1,15 +1,25 @@
 package com.fet.springboot.baseapp.repo.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+
+
+
+
 /**
  * Data Trasfer Object
  * 欄位與資料庫對應
@@ -48,12 +58,21 @@ public class Customer {
 	private String password;
 	
 
+	@ManyToMany(fetch=FetchType.LAZY, cascade= CascadeType.ALL)
+	@JoinTable(name = "blc_customer_role", 
+			joinColumns = {@JoinColumn(name = "customer_id")}, 
+			inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<Role> customerRoles = new HashSet<>();
+
 	public Customer() {
 		
 	}
 	
-	public Customer(String firstName, String lastName, String emailAddress,Date dateCreated,
-			String challengeAnswer,String externalId,String password) {
+	
+	
+	
+	public Customer(String firstName, String lastName, String emailAddress, Date dateCreated, String challengeAnswer,
+			String externalId, String password,Set<Role> customerRoles) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailAddress = emailAddress;
@@ -61,9 +80,12 @@ public class Customer {
 		this.challengeAnswer = challengeAnswer;
 		this.externalId = externalId;
 		this.password = password;
+		this.customerRoles = customerRoles;
 	}
-	
-	
+
+
+
+
 	public long getId() {
 		return id;
 	}
@@ -124,12 +146,24 @@ public class Customer {
 		this.externalId = externalId;
 	}
 
+
+	public Set<Role> getCustomerRoles() {
+		return customerRoles;
+	}
+
+	public void setCustomerRoles(Set<Role> customerRoles) {
+		this.customerRoles = customerRoles;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailAddress="
 				+ emailAddress + ", dateCreated=" + dateCreated + ", challengeAnswer=" + challengeAnswer
-				+ ", externalId=" + externalId + ", password=" + password + "]";
+				+ ", externalId=" + externalId + ", password=" + password + ", customerRoles=" + customerRoles + "]";
 	}
-	
-	
+
+		
 }

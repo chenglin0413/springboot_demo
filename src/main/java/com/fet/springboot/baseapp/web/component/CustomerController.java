@@ -9,9 +9,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
@@ -26,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fet.springboot.baseapp.logic.service.impl.CustomerServiceImpl;
+import com.fet.springboot.baseapp.logic.service.impl.RoleServiceImpl;
 import com.fet.springboot.baseapp.repo.domain.Customer;
+import com.fet.springboot.baseapp.repo.domain.Role;
 
 
 
@@ -42,6 +41,8 @@ public class CustomerController {
 	private static Logger logger = LoggerFactory.getLogger(CustomerController.class);
 	@Autowired
 	CustomerServiceImpl customerServiceImpl;
+	@Autowired
+	RoleServiceImpl roleServiceImpl;
 	
 	private Sort.Direction getSortDirection(String direction) {
 	    if (direction.equals("asc")) {
@@ -173,13 +174,15 @@ public class CustomerController {
 	      }
 
 	      List<Customer> customers = new ArrayList<Customer>();
-	      if (firstName == null) 
+	      System.out.println("firstName"+firstName);
+	      if (firstName == null||"".equals(firstName))
 	    	  customers = customerServiceImpl.findAll(Sort.by(orders));
 	      else
 	    	  customers = customerServiceImpl.findByFirstNameContaining(firstName, Sort.by(orders));
+	     
 	      Map<String, Object> response = new HashMap<>();
 	      response.put("customers", customers);
-
+	      
 	      logger.info("CustomerController - getAllCustomersPage - OK ");
 	      return new ResponseEntity<>(response, HttpStatus.OK);
 	    } catch (Exception e) {
@@ -196,7 +199,6 @@ public class CustomerController {
 	  @GetMapping("/customers/{id}")
 	  public ResponseEntity<Customer> getCustomerById(@PathVariable("id") long id) {
 	    Optional<Customer> customerData = customerServiceImpl.findById(id);
-
 	    if (customerData.isPresent()) {
 	      logger.info("CustomerController - getCustomerById - OK");
 	      return new ResponseEntity<>(customerData.get(), HttpStatus.OK);
@@ -209,15 +211,31 @@ public class CustomerController {
 	  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 	    try {
 			Date currentDate=new Date();
-//			System.out.println(currentDate);
-	    	Customer newCustomer = customerServiceImpl.save(new Customer(
+			Role theRole = new Role("VIP");
+			Customer newCustomer = new Customer(
 	    			customer.getFirstName(),
 	    			customer.getLastName(), 
 	    			customer.getEmailAddress(),
 	    			currentDate,
 	    			customer.getChallengeAnswer(),
 	    			customer.getExternalId(),
-	    			customer.getPassword()));
+	    			customer.getPassword(),
+	    			customer.getCustomerRoles()
+	    			);
+			newCustomer.getCustomerRoles().add(theRole);
+			theRole.getCustomers().add(newCustomer);
+			customerServiceImpl.save(newCustomer);
+			roleServiceImpl.save(theRole);
+//	    	Customer newCustomer = customerServiceImpl.save(new Customer(
+//	    			customer.getFirstName(),
+//	    			customer.getLastName(), 
+//	    			customer.getEmailAddress(),
+//	    			currentDate,
+//	    			customer.getChallengeAnswer(),
+//	    			customer.getExternalId(),
+//	    			customer.getPassword(),
+//	    			customer.getCustomerRoles()
+//	    			));
 	      logger.info("CustomerController - createCustomer - OK");
 	      return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
 	    } catch (Exception e) {
