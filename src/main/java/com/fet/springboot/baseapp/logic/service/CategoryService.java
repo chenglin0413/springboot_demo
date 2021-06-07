@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 
 import com.fet.springboot.baseapp.repo.domain.Category;
 
+
 public interface CategoryService {
 	Page<Category> findByNameContaining(String name, Pageable pageable);
 	List<Category> findByNameContaining(String name, Sort sort);

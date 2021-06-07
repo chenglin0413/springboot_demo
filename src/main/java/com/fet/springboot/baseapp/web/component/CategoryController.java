@@ -24,6 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fet.springboot.baseapp.logic.service.impl.CategoryServiceImpl;
 import com.fet.springboot.baseapp.repo.domain.Category;
 
+
+/**
+ * Handle Response/Request from API , Business Logic here. 
+ * @author jamLin
+ * @See - README.md (reference:github/bezkoder)
+ */
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
@@ -41,7 +47,13 @@ public class CategoryController {
 
     return Sort.Direction.ASC;
   }
-
+  
+  /**
+   * Sorted List<Categories> from DB.
+   * 
+   * @param sort
+   * @return ResponseEntity<List<Category>>
+   */
   @GetMapping("/sortedcategories")
   public ResponseEntity<List<Category>> getAllCategories(@RequestParam(defaultValue = "id,desc") String[] sort) {
 
@@ -71,7 +83,16 @@ public class CategoryController {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  
+  /**
+   * get all categories with contain name String ,and a sorted、pageable Object. 
+   * @param name
+   * @param page
+   * @param size
+   * @param sort
+   * @return ResponseEntity<Map<String, Object>>
+   */
+ 
   @GetMapping("/categories")
   public ResponseEntity<Map<String, Object>> getAllCategoriesPage(
       @RequestParam(required = false) String name,
@@ -117,7 +138,11 @@ public class CategoryController {
     }
   }
 
-
+  /**
+   * get one category with specific id .
+   * @param id
+   * @return ResponseEntity<Category>
+   */
   @GetMapping("/categories/{id}")
   public ResponseEntity<Category> getCategoryById(@PathVariable("id") long id) {
     Optional<Category> categoryData = categoryServiceImpl.findById(id);

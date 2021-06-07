@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 import com.fet.springboot.baseapp.logic.service.CustomerService;
 import com.fet.springboot.baseapp.repo.domain.Customer;
 import com.fet.springboot.baseapp.repo.jpa.repository.CustomerRepository;
+/**
+ * CustomerService Handler , Auto inject with CustomerRepository
+ * @author jamlin
+ *
+ */
 @Service
 public class CustomerServiceImpl implements CustomerService {
 	@Autowired

@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 
 /**
- * Data Trasfer Object
+ * Data Trasfer Object(Customer)
  * 欄位與資料庫對應
  * 
  * @author jamLin

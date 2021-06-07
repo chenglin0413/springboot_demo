@@ -146,15 +146,13 @@ public class CustomerController {
 //	    }
 //	  }
 	  /**
-	   * 
+	   * get all customers with contain firstName String ,and sort the result. 
 	   * @param firstName
-	   * @param page
-	   * @param size
 	   * @param sort
-	   * @return
+	   * @return ResponseEntity<Map<String, Object>>
 	   */
 	  @GetMapping("/customers")
-	  public ResponseEntity<Map<String, Object>> getAllCustomersPage(
+	  public ResponseEntity<Map<String, Object>> getAllCustomers(
 	      @RequestParam(required = false) String firstName,
 	      @RequestParam(defaultValue = "id,desc") String[] sort) {
 
@@ -183,16 +181,16 @@ public class CustomerController {
 	      Map<String, Object> response = new HashMap<>();
 	      response.put("customers", customers);
 	      
-	      logger.info("CustomerController - getAllCustomersPage - OK ");
+	      logger.info("CustomerController - getAllCustomers - OK ");
 	      return new ResponseEntity<>(response, HttpStatus.OK);
 	    } catch (Exception e) {
-	      logger.error("CustomerController - getAllCustomersPage - INTERNAL_SERVER_ERROR ");
+	      logger.error("CustomerController - getAllCustomers - INTERNAL_SERVER_ERROR ");
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	  }
 
 	  /**
-	   * 
+	   * get one customer with specific id .
 	   * @param id
 	   * @return new ResponseEntity<>(customerData.get(), HttpStatus.OK);
 	   */
@@ -207,11 +205,22 @@ public class CustomerController {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	  }
+	  /**
+	   * add new customer , a new role , at the same time .
+	   * @param customer{
+	   * firstName,
+	   * lastName,
+	   * emailAddress,
+	   * challengeAnswer,
+	   * externalId,
+	   * customerRoles:{roleName}
+	   * }.
+	   * @return
+	   */
 	  @PostMapping("/customers")
 	  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 	    try {
 			Date currentDate=new Date();
-			Role theRole = new Role("VIP");
 			Customer newCustomer = new Customer(
 	    			customer.getFirstName(),
 	    			customer.getLastName(), 
@@ -222,20 +231,8 @@ public class CustomerController {
 	    			customer.getPassword(),
 	    			customer.getCustomerRoles()
 	    			);
-			newCustomer.getCustomerRoles().add(theRole);
-			theRole.getCustomers().add(newCustomer);
+			newCustomer.getCustomerRoles();
 			customerServiceImpl.save(newCustomer);
-			roleServiceImpl.save(theRole);
-//	    	Customer newCustomer = customerServiceImpl.save(new Customer(
-//	    			customer.getFirstName(),
-//	    			customer.getLastName(), 
-//	    			customer.getEmailAddress(),
-//	    			currentDate,
-//	    			customer.getChallengeAnswer(),
-//	    			customer.getExternalId(),
-//	    			customer.getPassword(),
-//	    			customer.getCustomerRoles()
-//	    			));
 	      logger.info("CustomerController - createCustomer - OK");
 	      return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
 	    } catch (Exception e) {

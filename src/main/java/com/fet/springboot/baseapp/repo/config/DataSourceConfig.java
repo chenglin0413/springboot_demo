@@ -6,6 +6,16 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
+/**
+ * DataSourceConfig ->
+ * 
+ * static-attribute : driverClassName,url,userName,password。
+ *
+ * using @Configuration to auto injection。
+ * @author jamlin
+ *
+ */
 @Configuration
 public class DataSourceConfig {
 	private static final String driverClassName = "com.mysql.cj.jdbc.Driver";

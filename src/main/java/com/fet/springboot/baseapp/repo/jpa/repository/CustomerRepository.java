@@ -28,15 +28,44 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	Page<Customer> findByFirstNameContaining(String firstName, Pageable pageable);
 	
 	/**
-	 * Query data from DB , and return List<Customer> Object .
+	 * Query data from DB , and return the result List<Customer> Object with specific firstName
 	 * @param name
 	 * @param Sort
 	 * @return List<Customer>
 	 */ 
 	List<Customer> findByFirstNameContaining(String firstName, Sort sort);
+	
+	/**
+	 * Query data from DB,and return List<Customer> , and sort by id desc.
+	 * @param Sort
+	 * @return List<Customer>
+	 */
 	List<Customer> findAll(Sort sort);
+	
+	/**
+	 * Query data from DB,and return Page<Customer> , with pageable object.
+	 * @param pageable
+	 * @return Page<Customer>
+	 */
 	Page<Customer> findAll(Pageable pageable);
+	
+	/**
+	 * Save data to DB, and return  Customer Object .
+	 * @param pageable
+	 * @return Page<Customer>
+	 */
 	Customer save(Customer customer);
+	/**
+	 * get non null Customer data with specific id.
+	 * @param id
+	 * @return Optional<Customer>
+	 */
 	Optional<Customer>  findById(Long id);
+	
+	/**
+	 * Query data from DB ,find by FirstName, and return  Customer Object .
+	 * @param firstName
+	 * @return Customer
+	 */
 	Customer findByFirstName(String firstName);
 }

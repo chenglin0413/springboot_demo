@@ -13,10 +13,16 @@ import com.fet.springboot.baseapp.logic.service.CategoryService;
 import com.fet.springboot.baseapp.repo.domain.Category;
 import com.fet.springboot.baseapp.repo.jpa.repository.CategoryRepository;
 
+/**
+ * CategoryService Handler , Auto inject with CategoryRepository
+ * @author jamlin
+ *
+ */
 @Service
 public  class CategoryServiceImpl implements CategoryService{
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
 	@Override
 	public Page<Category> findByNameContaining(String name, Pageable pageable) {
 		return categoryRepository.findByNameContaining(name, pageable);

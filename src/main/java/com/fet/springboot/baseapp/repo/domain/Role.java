@@ -14,7 +14,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+/**
+ * Data Trasfer Object(Role)
+ * 欄位與資料庫對應
+ * 
+ * @author jamLin
+ *
+ */
 @Entity
 @Table(name="blc_role")
 public class Role {

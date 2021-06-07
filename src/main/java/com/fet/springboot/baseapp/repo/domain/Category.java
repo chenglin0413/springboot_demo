@@ -2,7 +2,7 @@ package com.fet.springboot.baseapp.repo.domain;
 import java.util.Date;
 import javax.persistence.*;
 /**
- * Data Trasfer Object
+ * Data Trasfer Object(Category)
  * 欄位與資料庫對應
  * 
  * @author jamLin
