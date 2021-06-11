@@ -220,7 +220,9 @@ public class CustomerController {
 	  @PostMapping("/customers")
 	  public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
 	    try {
-			Date currentDate=new Date();
+			System.out.println(customer);
+			
+	    	Date currentDate=new Date();
 			Customer newCustomer = new Customer(
 	    			customer.getFirstName(),
 	    			customer.getLastName(), 
@@ -231,7 +233,7 @@ public class CustomerController {
 	    			customer.getPassword(),
 	    			customer.getCustomerRoles()
 	    			);
-			newCustomer.getCustomerRoles();
+			
 			customerServiceImpl.save(newCustomer);
 	      logger.info("CustomerController - createCustomer - OK");
 	      return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
